@@ -16,10 +16,8 @@
 
 ## Backend Run Commands
 - Navigate to the backend directory: `cd backend`
-- Run the backend development server: `nodemon server.js`
-- Run the backend production server: `node server.js`
+- Run the backend development server: `npm start`
 - `"start": "node server.js"`
-- `"dev": "nodemon server.js"`
 
 ## Versions
 - Node version: v18.12.1
