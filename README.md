@@ -11,8 +11,7 @@
 
 ## Frontend Run Command
 - Navigate to the frontend directory: `cd frontend`
-- Navigate to the Angular frontend directory: `cd angular crud` or `cd crud-app`
-- Run the Angular development server: `ng serve`
+- Run the Angular development server: `ng serve or npm start`
 
 ## Backend Run Commands
 - Navigate to the backend directory: `cd backend`
