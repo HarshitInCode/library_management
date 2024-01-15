@@ -36,7 +36,7 @@ export class UsersComponent implements OnInit {
     this.UserForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       fName: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.minLength(6)]],
       role: ['user', Validators.required],
     });
 

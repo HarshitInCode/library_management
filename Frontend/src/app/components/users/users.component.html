@@ -90,14 +90,19 @@
           <div class="mb-3">
             <label for="fName" class="form-label">Full Name</label>
             <input type="text" class="form-control" id="fName" formControlName="fName" [ngClass]="{
-                                        'is-invalid':
-                                          UserForm.get('fName')?.invalid &&
-                                          (UserForm.get('fName')?.touched || isFormTouched)
-                                      }" (blur)="onFormControlTouched()" />
-            <div *ngIf="
-                                        UserForm.get('fName')?.hasError('required') &&
-                                        (UserForm.get('fName')?.touched || isFormTouched)
-                                      " class="text-danger">
+                            'is-invalid':
+                              UserForm.get('fName')?.invalid &&
+                              (UserForm.get('fName')?.touched || isFormTouched)
+              }"
+              (blur)="onFormControlTouched()"
+            />
+            <div
+              *ngIf="
+                UserForm.get('fName')?.hasError('required') &&
+                (UserForm.get('fName')?.touched || isFormTouched)
+              "
+              class="text-danger"
+            >
               Full Name is required
             </div>
           </div>
@@ -106,14 +111,19 @@
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input type="text" class="form-control" id="email" formControlName="email" [ngClass]="{
-                                        'is-invalid':
-                                          UserForm.get('email')?.invalid &&
-                                          (UserForm.get('email')?.touched || isFormTouched)
-                                      }" (blur)="onFormControlTouched()" />
-            <div *ngIf="
-                                        UserForm.get('email')?.hasError('required') &&
-                                        (UserForm.get('email')?.touched || isFormTouched)
-                                      " class="text-danger">
+                            'is-invalid':
+                              UserForm.get('email')?.invalid &&
+                              (UserForm.get('email')?.touched || isFormTouched)
+              }"
+              (blur)="onFormControlTouched()"
+            />
+            <div
+              *ngIf="
+                UserForm.get('email')?.hasError('required') &&
+                (UserForm.get('email')?.touched || isFormTouched)
+              "
+              class="text-danger"
+            >
               Email is required
             </div>
           </div>
@@ -121,16 +131,15 @@
           <!-- Password -->
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" formControlName="password" [ngClass]="{
-                                        'is-invalid':
-                                          UserForm.get('password')?.invalid &&
-                                          (UserForm.get('password')?.touched || isFormTouched)
-                                      }" (blur)="onFormControlTouched()" />
+            <input type="password" class="form-control" id="password" formControlName="password" />
+            
             <div *ngIf="
-                                        UserForm.get('password')?.hasError('required') &&
-                                        (UserForm.get('password')?.touched || isFormTouched)
-                                      " class="text-danger">
-              Password is required
+                            UserForm.get('password')?.invalid &&
+                            (UserForm.get('password')?.touched || isFormTouched)
+              "
+              class="text-danger"
+            >
+              Password must be at least 6 characters long
             </div>
           </div>
 
@@ -138,17 +147,21 @@
           <div class="mb-3">
             <label for="role" class="form-label">Role</label>
             <select class="form-select" id="role" formControlName="role" [ngClass]="{
-                                        'is-invalid':
-                                          UserForm.get('role')?.invalid &&
-                                          (UserForm.get('role')?.touched || isFormTouched)
-                                      }" (blur)="onFormControlTouched()">
+                            'is-invalid':
+                              UserForm.get('role')?.invalid &&
+                              (UserForm.get('role')?.touched || isFormTouched)
+              }"
+              (blur)="onFormControlTouched()"
+            >
               <option value="user">User</option>
               <option value="admin">Admin</option>
             </select>
             <div *ngIf="
-                                        UserForm.get('role')?.hasError('required') &&
-                                        (UserForm.get('role')?.touched || isFormTouched)
-                                      " class="text-danger">
+                            UserForm.get('role')?.hasError('required') &&
+                            (UserForm.get('role')?.touched || isFormTouched)
+              "
+              class="text-danger"
+            >
               Role is required
             </div>
           </div>
