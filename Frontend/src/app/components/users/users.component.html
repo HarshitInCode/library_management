@@ -130,9 +130,9 @@
 
           <!-- Password -->
           <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">New Password</label>
             <input type="password" class="form-control" id="password" formControlName="password" />
-            
+
             <div *ngIf="
                             UserForm.get('password')?.invalid &&
                             (UserForm.get('password')?.touched || isFormTouched)
@@ -171,7 +171,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary" (click)="saveUser()" [disabled]="!checkFormValidity()"
+        <button type="button" class="btn btn-primary" (click)="saveUser()"
           data-bs-dismiss="modal">
           Save User
         </button>
