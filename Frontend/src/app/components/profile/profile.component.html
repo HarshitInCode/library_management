@@ -1,0 +1,113 @@
+<app-header></app-header>
+<div class="container" style="margin-top: 10rem;">
+  <div class="row gutters">
+    <!-- Left column -->
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="account-settings">
+            <div class="user-profile">
+              <div class="user-avatar">
+                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Maxwell Admin">
+              </div>
+              <h5 class="user-name">{{ profileForm.get('fName')?.value }}</h5>
+              <h6 class="user-email">{{ profileForm.get('email')?.value }}</h6>
+            </div>
+            <div class="about">
+              <h5>About</h5>
+              <p>{{ profileForm.get('about')?.value ? profileForm.get('about')?.value : '-' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Right column -->
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h6 class="mb-2 text-primary">Personal Details</h6>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="fullName">Full Name</label>
+                  <input type="text" class="form-control" id="fullName" placeholder="Enter full name"
+                    formControlName="fName">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="eMail">Email</label>
+                  <input type="email" class="form-control" id="eMail" placeholder="Enter email ID"
+                    formControlName="email">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="role">Role</label>
+                  <select class="form-control" id="role" formControlName="role">
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="phone">Phone</label>
+                  <input type="text" class="form-control" id="phone" placeholder="Enter phone number"
+                    formControlName="phone">
+                </div>
+              </div>
+            </div>
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <h6 class="mt-3 mb-2 text-primary">Address</h6>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="street">Street</label>
+                  <input type="text" class="form-control" id="street" placeholder="Enter Street"
+                    formControlName="street">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="ciTy">City</label>
+                  <input type="text" class="form-control" id="ciTy" placeholder="Enter City" formControlName="city">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="sTate">State</label>
+                  <input type="text" class="form-control" id="sTate" placeholder="Enter State" formControlName="state">
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                <div class="form-group">
+                  <label for="zIp">Zip Code</label>
+                  <input type="text" class="form-control" id="zIp" placeholder="Zip Code" formControlName="zipCode">
+                </div>
+              </div>
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="form-group">
+                  <label for="about">About</label>
+                  <textarea class="form-control" id="about" placeholder="Enter something about yourself"
+                    formControlName="about"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 update-btn">
+                <div class="text-right">
+                  <button type="submit" id="update" name="update" class="btn btn-primary">Update</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<header class="header" id="header">
+  <nav class="nav container">
+    <a class="nav__logo" routerLink="/home">Library Management</a>
+
+    <div class="nav__menu" id="nav-menu" [ngClass]="{'open': isMenuOpen}">
+      <ul class="nav__list">
+        <li class="nav__item"><a class="nav__link" routerLink="/books" routerLinkActive="active">Books</a></li>
+        <li class="nav__item"><a class="nav__link" routerLink="/borrowed-books" routerLinkActive="active">Borrowed Books</a>
+        </li>
+        <li *ngIf="role === 'admin'" class="nav__item"><a class="nav__link" routerLink="/all-users"
+            routerLinkActive="active">Users</a></li>
+      </ul>
+      <!-- Close button -->
+      <div class="nav__close" id="nav-close" (click)="toggleMenu()">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+    </div>
+
+    <div class="nav__actions">
+      <a class="nav-link" routerLink="/profile">
+        <i class="fas fa-user icons"></i>
+      </a>
+      <a class="nav-link" (click)="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i>
+      </a>
+      <div class="nav__toggle" id="nav-toggle" (click)="toggleMenu()">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,12 @@
+/* Your existing styles go here */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+
+}
+
+.modal-content {
+  z-index: 1000;
+}
