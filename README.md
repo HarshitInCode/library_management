@@ -7,7 +7,7 @@
 
 ## IMP Note
 - After cloning from GitHub, navigate to the respective directories (`frontend` and `backend`) and run `npm install` to install dependencies.
-- Start The Backend Server First with for Development OR Local cmd: "node run dev" OR "npx nodemon server.js"
+- Start The Backend Server First with for Development OR Local cmd: "node start" OR "npx nodemon server.js"
 
 ## Frontend Run Command
 - Navigate to the frontend directory: `cd frontend`
