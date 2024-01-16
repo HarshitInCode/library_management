@@ -1,8 +1,3 @@
-/* body,
-input {
-  font-family: 'Montserrat', sans-serif;
-} */
-
 .containers {
   position: relative;
   width: 100%;
@@ -394,20 +389,10 @@ form.sign-in-form {
     left: 50%;
   }
 }
-.validation {
-  width: 20rem !important;
-  margin-top: 25px !important;
-  color: red;
-}
 
 .icons {
   margin-top: 1rem;
   margin-left: 12px;
-}
-
-.input-field {
-  position: relative;
-  margin-bottom: 20px;
 }
 
 .icons {
@@ -456,4 +441,42 @@ select::after {
   transform: translateY(-50%);
   cursor: pointer;
   color: black;
+}
+.input-field {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-field input,
+.input-field select {
+  width: 100%;
+  padding: 10px;
+  /* Adjust padding as needed */
+  box-sizing: border-box;
+  /* Include padding in the element's total width */
+}
+
+.validation {
+  width: 100%;
+  margin-top: 5px;
+  color: red;
+  position: absolute;
+  bottom: 0;
+  margin-bottom: -1.6rem;
+}
+
+/* Add media queries for responsiveness if needed */
+@media (max-width: 768px) {
+  .input-field {
+    margin-bottom: 15px;
+  }
+
+  .input-field input,
+  .input-field select {
+    padding: 8px;
+  }
+
+  .validation {
+    margin-top: 3px;
+  }
 }
