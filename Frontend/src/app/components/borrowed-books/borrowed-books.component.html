@@ -27,12 +27,12 @@
             <td>{{ item.author }}</td>
             <td>{{ item.genre }}</td>
             <td>{{ item.publication_year }}</td>
-            <td>{{ item.borrowed_date | date }}</td>
+            <td>{{ item.borrowed_date | date:'medium' }}</td>
             <td>
               <ng-container *ngIf="item.return_date; else dash">
-                {{ item.return_date | date }}
+                {{ item.return_date | date:'medium' }}
               </ng-container>
-              <ng-template #dash>-</ng-template>
+              <ng-template #dash>Pending</ng-template>
             </td>
             <td *ngIf="this.role === 'user'">
               <button (click)="return(item.book_id)" class="button-13" role="button">Return</button>
