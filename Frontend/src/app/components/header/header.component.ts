@@ -24,21 +24,22 @@ export class HeaderComponent implements OnInit {
     const user = this.authService.getUser();
     this.role = user.role;
   }
-
   toggleMenu() {
-    console.log('Toggle menu clicked');
     this.isMenuOpen = !this.isMenuOpen;
-
-    // Get the native element of the menu
     const menuElement = this.el.nativeElement.querySelector('.nav__menu');
 
-    // Toggle the 'open' class directly on the native element
-    if (this.isMenuOpen) {
-      this.renderer.addClass(menuElement, 'open');
+    if (menuElement) {
+      if (this.isMenuOpen) {
+        this.renderer.setStyle(menuElement, 'top', '0');
+      } else {
+        this.renderer.setStyle(menuElement, 'top', '-100%');
+      }
     } else {
-      this.renderer.removeClass(menuElement, 'open');
+      console.error('error: cannot toggle menu');
     }
   }
+
+
 
   logout() {
     localStorage.clear();

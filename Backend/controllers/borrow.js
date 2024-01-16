@@ -197,7 +197,6 @@ const getBookDetails = async (req, res) => {
     const bookId = req.params.bookId;
 
     try {
-        // Find the Borrow entry for the book by ID and user ID
         const borrowEntry = await Borrow.findOne({
             book_id: bookId,
             'borrowed_by.user_id': userId,

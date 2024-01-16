@@ -1,28 +1,3 @@
-  html {
-    font: normal 16px sans-serif;
-    line-height: 1.5;
-  }
-
-  body {
-    background: #f6f5f6;
-    color: #373636;
-    font: inherit;
-    /* font-family: 'Inter', sans-serif; */
-    font-size: 1rem;
-    line-height: inherit;
-    position: relative;
-  }
-
-  body::before {
-    background: #247783;
-    content: '';
-    display: block;
-    height: 30rem;
-    position: absolute;
-    width: 100%;
-    z-index: -1;
-  }
-
   a {
     color: inherit;
     cursor: pointer;
@@ -43,7 +18,6 @@
   h2,
   h3 {
     color: #247783;
-    /* font-family: 'Lora', serif; */
     font-weight: 600;
     line-height: 1.25;
   }
@@ -163,36 +137,6 @@
     padding: .75rem 1rem;
   }
 
-  .input.checkbox {
-    border: 0;
-    height: 1.5rem;
-    position: relative;
-    width: 1.5;
-  }
-
-  .input.checkbox::after {
-    background: #fdfdfe;
-    border: 1px solid #c6dcdf;
-    border-radius: .25rem;
-    box-sizing: border-box;
-    content: '';
-    cursor: pointer;
-    display: inline-flex;
-    height: 1.5rem;
-    opacity: 1;
-    position: absolute;
-    top: 0;
-    width: 1.5rem;
-  }
-
-  .input.checkbox:checked::after {
-    background-color: #247783;
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iI2ZkZmRmZSIgdmlld0JveD0iMCAwIDI1NiAyNTYiPjxwYXRoIGQ9Ik0yMzIuNDksODAuNDlsLTEyOCwxMjhhMTIsMTIsMCwwLDEtMTcsMGwtNTYtNTZhMTIsMTIsMCwxLDEsMTctMTdMOTYsMTgzLDIxNS41MSw2My41MWExMiwxMiwwLDAsMSwxNywxN1oiPjwvcGF0aD48L3N2Zz4=");
-    background-position: center;
-    background-repeat: no-repeat;
-    border: 0;
-  }
-
   .input.number {
     padding-right: .75rem;
     text-align: right;
@@ -255,25 +199,6 @@
   td {
     font-size: .875rem;
     padding: 1.25rem 1rem;
-  }
-
-  .bulk-actions {
-    align-items: center;
-    background: #c6dcdf;
-    border-radius: .25rem;
-    color: #373636;
-    display: inline-flex;
-    gap: .75rem;
-    padding: .75rem 1.5rem;
-  }
-
-  .bulk-actions .icon {
-    color: #247783;
-    cursor: pointer;
-  }
-
-  .bulk-actions .icon:hover {
-    color: #1d5f69;
   }
 
   .flex {
@@ -340,4 +265,22 @@ button,
 
 .btn-close:hover {
   background: none;
+}
+@media screen and (max-width: 767px) {
+  table {
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .table-container {
+    overflow: auto;
+    max-width: 100%;
+  }
+
+  table {
+    width: 100%;
+  }
 }

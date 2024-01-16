@@ -4,59 +4,43 @@
     <section class="flex gap-2 items-center justify-between">
 
       <h3 id="title" class="leading-none">Borrowed Books</h3>
-
-      <div class="flex gap-1 items-center">
-        <!-- <button class="button icon link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
-            <path
-              d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"
-            ></path>
-          </svg>
-        </button> -->
-
-        <button class="button icon link">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 256 256">
-            <path
-              d="M32,80a8,8,0,0,1,8-8H72a8,8,0,0,1,0,16H40A8,8,0,0,1,32,80Zm184,88H176V152a8,8,0,0,0-16,0v48a8,8,0,0,0,16,0V184h40a8,8,0,0,0,0-16Zm-80,0H40a8,8,0,0,0,0,16h96a8,8,0,0,0,0-16Zm-32-56a8,8,0,0,0,8-8V88H216a8,8,0,0,0,0-16H112V56a8,8,0,0,0-16,0v48A8,8,0,0,0,104,112Z"
-            ></path>
-          </svg>
-        </button>
-      </div>
     </section>
 
     <section class="flex flex-column gap-2">
-      <table>
-        <tr class="no-hover">
-          <th><span>ID</span></th>
-          <th><span>Book Name</span></th>
-          <th><span>Author</span></th>
-          <th><span>Genre</span></th>
-          <th><span>Publication Year</span></th>
-          <th><span>Borrowed date</span></th>
-          <th><span>Return date</span></th>
-          <th *ngIf="this.role === 'user'"><span>Status</span></th>
-          <th *ngIf="this.role === 'admin'"><span>Borrowed by</span></th>
-        </tr>
+      <div class="table-container">
+        <table>
+          <tr class="no-hover">
+            <th><span>ID</span></th>
+            <th><span>Book Name</span></th>
+            <th><span>Author</span></th>
+            <th><span>Genre</span></th>
+            <th><span>Publication Year</span></th>
+            <th><span>Borrowed date</span></th>
+            <th><span>Return date</span></th>
+            <th *ngIf="this.role === 'user'"><span>Status</span></th>
+            <th *ngIf="this.role === 'admin'"><span>Borrowed by</span></th>
+          </tr>
 
-        <tr *ngFor="let item of tableData; let i = index">
-          <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
-          <td>{{ item.title }}</td>
-          <td>{{ item.author }}</td>
-          <td>{{ item.genre }}</td>
-          <td>{{ item.publication_year }}</td>
-          <td>{{ item.borrowed_date | date }}</td>
-          <td>
-            <ng-container *ngIf="item.return_date; else dash">
-              {{ item.return_date | date }}
-            </ng-container>
-            <ng-template #dash>-</ng-template>
-          </td>
-          <td *ngIf="this.role === 'user'">
-            <button (click)="return(item.book_id)" class="button-13" role="button">Return</button>
-          </td>
-          <td *ngIf="this.role === 'admin'">{{ item.borrowed_by.name }}</td>
-        </tr>
-      </table>
+          <tr *ngFor="let item of tableData; let i = index">
+            <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+            <td>{{ item.title }}</td>
+            <td>{{ item.author }}</td>
+            <td>{{ item.genre }}</td>
+            <td>{{ item.publication_year }}</td>
+            <td>{{ item.borrowed_date | date }}</td>
+            <td>
+              <ng-container *ngIf="item.return_date; else dash">
+                {{ item.return_date | date }}
+              </ng-container>
+              <ng-template #dash>-</ng-template>
+            </td>
+            <td *ngIf="this.role === 'user'">
+              <button (click)="return(item.book_id)" class="button-13" role="button">Return</button>
+            </td>
+            <td *ngIf="this.role === 'admin'">{{ item.borrowed_by.name }}</td>
+          </tr>
+          </table>
+      </div>
 
 <section class="flex items-center justify-between">
   <small class="muted">{{ currentItemsRange }}</small>

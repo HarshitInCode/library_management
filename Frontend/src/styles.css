@@ -10,3 +10,36 @@
 .modal-content {
   z-index: 1000;
 }
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #247783;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #1d5f69;
+}
+
+html scrollbar {
+  --scrollbar-width: thin;
+  --scrollbar-track-color: #f5f5f5;
+  --scrollbar-thumb-color: #247783;
+  --scrollbar-thumb-hover-color: #1d5f69;
+}
+
+html scrollbar thumb {
+  border-radius: 10px;
+}
+
+html scrollbar thumb:hover {
+  background-color: var(--scrollbar-thumb-hover-color);
+}

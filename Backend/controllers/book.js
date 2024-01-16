@@ -50,7 +50,7 @@ const addBook = async (req, res) => {
     }
 };
 
-// Get a specific book by ID (accessible to everyone)
+// Get a specific book by ID (accessible to admin)
 const getBookById = async (req, res) => {
     try {
 
