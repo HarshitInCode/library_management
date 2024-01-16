@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
   private apiUrl = 'http://localhost:3000/api/v1';
@@ -15,13 +15,23 @@ export class ApiService {
     return this.http.get(url);
   }
 
-  getBorrowedBooksforUser(userId: string, page?: number, limit?: number): Observable<any> {
+  getBorrowedBooksforUser(
+    userId: string,
+    page?: number,
+    limit?: number
+  ): Observable<any> {
     const url = `${this.apiUrl}/borrow/borrowed-books/${userId}?page=${page}&limit=${limit}`;
     return this.http.get(url);
   }
 
-  getBorrowedBooksforAdmin(page: number, limit: number): Observable<any> {
-    const url = `${this.apiUrl}/borrow/all-books?page=${page}&limit=${limit}`;
+  getBorrowedBooksforAdmin(
+    page: number,
+    limit: number,
+    search?: string
+  ): Observable<any> {
+    const url = `${this.apiUrl
+      }/borrow/all-books?page=${page}&limit=${limit}&search=${search ? search : ''
+      }`;
     return this.http.get(url);
   }
 
@@ -43,7 +53,7 @@ export class ApiService {
   }
   returnBook(bookId: string): Observable<any> {
     const url = `${this.apiUrl}/borrow/return/${bookId}`;
-    const body = {}
+    const body = {};
     return this.http.post(url, body);
   }
 

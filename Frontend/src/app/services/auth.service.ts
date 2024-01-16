@@ -20,10 +20,10 @@ export class AuthService {
     this.tokenSubject.next(token);
   }
 
-  async getToken(): Promise<string | null> {
-    await this.tokenInitializedPromise;
-    return this.tokenSubject.getValue();
-  }
+  // async getToken(): Promise<string | null> {
+  //   await this.tokenInitializedPromise;
+  //   return this.tokenSubject.getValue();
+  // }
 
   get token$(): Observable<string | null> {
     return this.tokenSubject.asObservable();
@@ -70,17 +70,17 @@ export class AuthService {
     return new HttpHeaders().set('Authorization', `${token}`);
   }
 
-  authenticatedRequest<T>(method: string, url: string, body?: any): Observable<T> {
-    return this.token$.pipe(
-      tap((token) => {
-        if (!token) {
-          throw new Error('Token is not available.');
-        }
-      }),
-      switchMap(() => {
-        const options = { headers: this.getAuthorizationHeader() };
-        return this.http.request<T>(method, `${this.baseUrl}/${url}`, { ...options, body });
-      })
-    );
-  }
+  // authenticatedRequest<T>(method: string, url: string, body?: any): Observable<T> {
+  //   return this.token$.pipe(
+  //     tap((token) => {
+  //       if (!token) {
+  //         throw new Error('Token is not available.');
+  //       }
+  //     }),
+  //     switchMap(() => {
+  //       const options = { headers: this.getAuthorizationHeader() };
+  //       return this.http.request<T>(method, `${this.baseUrl}/${url}`, { ...options, body });
+  //     })
+  //   );
+  // }
 }

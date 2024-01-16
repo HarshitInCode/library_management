@@ -4,14 +4,12 @@ const Borrow = require('../models/borrow');
 
 const borrowBook = async (req, res) => {
     const user = req.user;
-
     const bookDetails = req.body;
 
     try {
-        // Check if the book exists in the library_Books collection
         const existingBook = await Book.findById(bookDetails.book_id);
-        const existingBorrow = await Borrow.findOne({
-            book_id: bookDetails.book_id,
+        const existingBorrowsByUser = await Borrow.find({
+            'borrowed_by.user_id': user.userId,
             borrowed: true,
         });
 
@@ -21,9 +19,18 @@ const borrowBook = async (req, res) => {
             });
         }
 
-        // Check if the book is already borrowed
-        if (existingBorrow && existingBorrow.borrowed) {
-            // Check if the book is borrowed by the same user
+        if (existingBorrowsByUser.length >= 3) {
+            return res.status(400).json({
+                msg: 'User can only borrow up to three books at a time',
+            });
+        }
+
+        const existingBorrow = await Borrow.findOne({
+            book_id: bookDetails.book_id,
+            borrowed: true,
+        });
+
+        if (existingBorrow) {
             if (
                 existingBorrow.borrowed_by &&
                 existingBorrow.borrowed_by.user_id.toString() === user.userId.toString()
@@ -34,7 +41,6 @@ const borrowBook = async (req, res) => {
             }
         }
 
-        // Set default values and user information in borrowed_by
         const currentDate = new Date();
         bookDetails.total_copies = existingBook.total_copies;
         bookDetails.available_copies = existingBook.total_copies - 1;
@@ -46,11 +52,9 @@ const borrowBook = async (req, res) => {
         bookDetails.return_date = null;
         bookDetails.borrowed_date = currentDate;
 
-        // Create a new Borrow entry
         const newBorrow = new Borrow(bookDetails);
         await newBorrow.save();
 
-        // Update the book to mark it as borrowed
         existingBook.borrowed = true;
         existingBook.available_copies -= 1;
         existingBook.save();
@@ -66,6 +70,7 @@ const borrowBook = async (req, res) => {
         });
     }
 };
+
 
 const returnBook = async (req, res) => {
     const userId = req.user.userId;
@@ -157,19 +162,30 @@ const getBorrowedList = async (req, res) => {
 
 const getAllBorrowList = async (req, res) => {
     const user = req.user;
+    const requestedSearchTerm = req.query.search;
+    console.log(requestedSearchTerm);
 
     try {
         if (user && user.role === 'admin') {
             const page = parseInt(req.query.page) || 1;
             const limit = parseInt(req.query.limit) || 10;
+            const baseQuery = {};
 
-            const totalCount = await Borrow.countDocuments();
+            if (requestedSearchTerm) {
+                baseQuery.$or = [
+                    { 'borrowed_by.name': { $regex: new RegExp(requestedSearchTerm, 'i') } },
+                    { 'title': { $regex: new RegExp(requestedSearchTerm, 'i') } },
+                    { 'author': { $regex: new RegExp(requestedSearchTerm, 'i') } },
+                    { 'genre': { $regex: new RegExp(requestedSearchTerm, 'i') } }
+                ];
+            }
 
-            const allBorrowList = await Borrow.find()
+            const totalCount = await Borrow.countDocuments(baseQuery);
+
+            const allBorrowList = await Borrow.find(baseQuery)
                 .sort({ createdAt: -1 })
                 .skip((page - 1) * limit)
-                .limit(limit)
-                .sort({ createdAt: -1 });
+                .limit(limit);
 
             res.status(200).json({
                 msg: 'All borrow data retrieved successfully',
@@ -190,6 +206,8 @@ const getAllBorrowList = async (req, res) => {
         });
     }
 };
+
+
 
 
 const getBookDetails = async (req, res) => {
@@ -220,6 +238,7 @@ const getBookDetails = async (req, res) => {
         });
     }
 };
+
 
 
 module.exports = { borrowBook, returnBook, getBorrowedList, getAllBorrowList, getBookDetails };

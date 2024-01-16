@@ -41,13 +41,13 @@
                   Return
                 </button>
               </td>
-            </ng-container>
-            <ng-template #borrowButton>
-              <td *ngIf="this.role === 'user'">
-                <button (click)="borrow(item)" class="button-13" role="button">
-                  Borrow
-                </button>
-              </td>
+              </ng-container>
+              <ng-template #borrowButton>
+                <td *ngIf="this.role === 'user'">
+                  <button (click)="borrow(item)" class="button-13" role="button">
+                    Borrow
+                  </button>
+                </td>
             </ng-template>
 
             <td *ngIf="this.role === 'admin'">
@@ -59,8 +59,8 @@
                 <i class="fa-solid fa-pen-to-square"></i>
               </a>
             </td>
-            </tr>
-            </table>
+          </tr>
+          </table>
       </div>
 
       <section class="flex items-center justify-between">

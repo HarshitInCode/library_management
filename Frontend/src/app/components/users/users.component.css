@@ -266,7 +266,7 @@ button,
 .btn-close:hover {
   background: none;
 }
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 840px) {
   table {
     overflow-x: auto;
     display: block;
@@ -274,7 +274,7 @@ button,
   }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 840px) {
   .table-container {
     overflow: auto;
     max-width: 100%;

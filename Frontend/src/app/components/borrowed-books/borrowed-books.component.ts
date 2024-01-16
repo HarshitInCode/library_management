@@ -3,6 +3,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-borrowed-books',
@@ -10,6 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./borrowed-books.component.css']
 })
 export class BorrowedBooksComponent implements OnInit {
+  private searchSubject = new Subject<string>();
   role: string | undefined;
   tableData: any[] = [];
 
@@ -20,6 +23,7 @@ export class BorrowedBooksComponent implements OnInit {
 
   numberItemsSelected = 0;
   currentItemsRange: string = '';
+  searchText: string = '';
 
   constructor(
     private apiService: ApiService,
@@ -30,6 +34,8 @@ export class BorrowedBooksComponent implements OnInit {
 
   ngOnInit() {
     this.getBorrowedBooks();
+    this.setupSearchDebounce();
+
   }
 
   getBorrowedBooks() {
@@ -95,10 +101,6 @@ export class BorrowedBooksComponent implements OnInit {
     this.currentItemsRange = `${startItem}-${endItem} / ${this.totalItems} items`;
   }
 
-  saveBook(formData: any) {
-
-  }
-
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
@@ -111,5 +113,22 @@ export class BorrowedBooksComponent implements OnInit {
       this.currentPage--;
       this.getBorrowedBooks();
     }
+  }
+
+  setupSearchDebounce() {
+    this.searchSubject.pipe(
+      debounceTime(100),
+      distinctUntilChanged(),
+      switchMap(searchText => this.apiService.getBorrowedBooksforAdmin(this.currentPage, this.itemsPerPage, searchText))
+    ).subscribe(response => {
+      this.tableData = response.borrowList;
+      this.totalItems = response.totalCount;
+      this.totalPages = response.totalPages;
+      this.updateCurrentItemsRange();
+    });
+  }
+
+  search() {
+    this.searchSubject.next(this.searchText);
   }
 }

@@ -1,10 +1,16 @@
 <app-header></app-header>
 <div class="body-content flex flex-column">
   <main class="flex flex-column gap-3 grow">
-    <section class="flex gap-2 items-center justify-between">
+<section class="flex gap-2 items-center justify-between">
+  <h3 id="title" class="leading-none">Borrowed Books</h3>
+  <div class="search-container flex items-center">
+    <div class="search-wrapper">
+      <input type="search" [(ngModel)]="searchText" class="search-input" placeholder="Search..." (keyup)="search()">
+      <span class="search-icon" [class.hidden]="searchText !== ''"><i class="fa-solid fa-magnifying-glass"></i></span>
+    </div>
+  </div>
+</section>
 
-      <h3 id="title" class="leading-none">Borrowed Books</h3>
-    </section>
 
     <section class="flex flex-column gap-2">
       <div class="table-container">
