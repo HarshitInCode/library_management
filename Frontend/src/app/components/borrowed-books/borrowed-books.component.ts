@@ -125,10 +125,20 @@ export class BorrowedBooksComponent implements OnInit {
       this.totalItems = response.totalCount;
       this.totalPages = response.totalPages;
       this.updateCurrentItemsRange();
-    });
+      this.spinner.hide();
+    },
+      (error) => {
+        const errorMessage =
+          error.error && error.error.msg
+            ? error.error.msg
+            : 'An error occurred';
+        this.toastr.error(errorMessage);
+        this.spinner.hide();
+      });
   }
 
   search() {
+    this.spinner.show();
     this.searchSubject.next(this.searchText);
   }
 }
