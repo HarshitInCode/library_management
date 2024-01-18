@@ -1,5 +1,5 @@
 const Book = require('../models/book');
-const { UnauthenticatedError } = require('../errors');
+const { UnauthenticatedError, BadRequestError } = require('../errors');
 
 // Get all books (accessible to everyone)
 const getBooks = async (req, res) => {
@@ -23,32 +23,39 @@ const getBooks = async (req, res) => {
         });
     } catch (error) {
         console.error('Error retrieving books:', error.message);
-        throw new UnauthenticatedError('Failed to retrieve books');
+        throw new BadRequestError('Failed to retrieve books');
     }
 };
 
 // Add a book (accessible only to admin)
 const addBook = async (req, res) => {
-
     const user = req.user;
+    console.log('req.body', req.body)
+    console.log('req.file', req.file)
+
     if (!user || user.role !== 'admin') {
         throw new UnauthenticatedError('Only admins can add books');
     }
 
     try {
+        const { title, author, publication_year, genre, total_copies } = req.body;
+        const image = req.file ? req.file.filename : null;
 
-        const newBook = await Book.create({ ...req.body });
+        if (!image) {
+            throw new BadRequestError('Please provide an image for the book');
+        }
 
-
+        const newBook = await Book.create({ title, author, publication_year, genre, total_copies, image });
         res.status(201).json({
             msg: 'Book added successfully',
             book: newBook,
         });
     } catch (error) {
         console.error('Error adding book:', error.message);
-        throw new UnauthenticatedError('Failed to add book');
+        throw new BadRequestError('Failed to add book');
     }
 };
+
 
 // Get a specific book by ID (accessible to admin)
 const getBookById = async (req, res) => {
@@ -68,7 +75,7 @@ const getBookById = async (req, res) => {
         });
     } catch (error) {
         console.error('Error retrieving book:', error.message);
-        throw new UnauthenticatedError('Failed to retrieve book');
+        throw new BadRequestError('Failed to retrieve book');
     }
 };
 
@@ -96,7 +103,7 @@ const updateBook = async (req, res) => {
         });
     } catch (error) {
         console.error('Error updating book:', error.message);
-        throw new UnauthenticatedError('Failed to update book');
+        throw new BadRequestError('Failed to update book');
     }
 };
 
@@ -124,7 +131,7 @@ const deleteBook = async (req, res) => {
         });
     } catch (error) {
         console.error('Error deleting book:', error.message);
-        throw new UnauthenticatedError('Failed to delete book');
+        throw new BadRequestError('Failed to delete book');
     }
 };
 

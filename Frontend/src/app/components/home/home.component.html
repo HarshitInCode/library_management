@@ -21,7 +21,7 @@
             <th><span>Author</span></th>
             <th><span>Genre</span></th>
             <th><span>Publication Year</span></th>
-            <th><span>Available Copies</span></th>
+            <!-- <th><span>Available Copies</span></th> -->
             <th><span>Total copies</span></th>
             <th *ngIf="this.role === 'user'"><span>Status</span></th>
             <th *ngIf="this.role === 'admin'"><span>Action</span></th>
@@ -33,7 +33,7 @@
             <td>{{ item.author }}</td>
             <td>{{ item.genre }}</td>
             <td>{{ item.publication_year }}</td>
-            <td>{{ item.available_copies }}</td>
+            <!-- <td>{{ item.available_copies }}</td> -->
             <td>{{ item.total_copies }}</td>
             <ng-container *ngIf="this.role === 'user'">
               <td *ngIf="item.borrowed; else borrowButton">
@@ -99,7 +99,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form *ngIf="bookForm" [formGroup]="bookForm">
+        <form *ngIf="bookForm" [formGroup]="bookForm" enctype="multipart/form-data">
           <!-- Title -->
           <div class="mb-3">
             <label for="title" class="form-label">Title</label>
@@ -185,6 +185,10 @@
                                                   " class="text-danger">
               Total Copies must be a number
             </div>
+          </div>
+          <div>
+            <label for="images" class="form-label">Upload Images</label>
+            <input type="file" id="images" (change)="onFileChange($event)" formControlName="image">
           </div>
         </form>
       </div>

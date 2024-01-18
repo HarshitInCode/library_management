@@ -29,6 +29,10 @@ const BookSchema = new mongoose.Schema({
             return this.total_copies;
         },
     },
+    image: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('library_Books', BookSchema);

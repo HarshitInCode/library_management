@@ -4,6 +4,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const express = require('express');
+const path = require('path');
 
 const app = express();
 const authenticateUser = require('./middleware/authentication');
@@ -12,6 +13,8 @@ const authenticateUser = require('./middleware/authentication');
 const authRouter = require('./routes/auth');
 const booksRouter = require('./routes/book');
 const borrowRouter = require('./routes/borrow');
+
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 // error handlers
 const notFoundMiddleware = require("./middleware/not-found");

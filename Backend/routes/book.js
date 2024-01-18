@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-
+const { storage } = require('../helper/multer');
+const multer = require('multer');
+const { upload } = require('../helper/multer');
 const { addBook, getBooks, getBookById, updateBook, deleteBook } = require('../controllers/book');
 
 // Add a book
-router.post('/', addBook);
+router.post('/', upload.single('image'), addBook);
 
 // Get all books
 router.get('/', getBooks);

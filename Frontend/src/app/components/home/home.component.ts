@@ -50,6 +50,7 @@ export class HomeComponent implements OnInit {
       publication_year: ['', [Validators.required]],
       genre: ['', Validators.required],
       total_copies: ['', [Validators.required]],
+      image: [null, Validators.required]
     });
     this.getAllData();
   }
@@ -116,7 +117,6 @@ export class HomeComponent implements OnInit {
   }
 
   DeleteBook(bookId: string) {
-
     this.apiService.deleteBook(bookId).subscribe(
       (res) => {
         this.toastr.success('Book deleted successfully');
@@ -203,10 +203,30 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  saveBook(formData: any) {
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    console.log(file);
+
+    this.bookForm?.get('image')?.setValue(file.name);
+  }
+
+
+  saveBook(formValue: any) {
     this.spinner.show();
+    console.log('data saved', formValue.value);
+    const formData = new FormData();
+    formData.append('title', formValue.value.title);
+    formData.append('author', formValue.value.author);
+    formData.append('publication_year', formValue.value.publication_year);
+    formData.append('genre', formValue.value.genre);
+    formData.append('total_copies', formValue.value.total_copies);
+    if (formValue.image instanceof File) {
+      formData.append('image', formValue.image);
+    }
+    console.log(formData);
+
     if (this.book_id) {
-      this.apiService.updateBook(this.book_id, formData.value).subscribe(
+      this.apiService.updateBook(this.book_id, formData).subscribe(
         (res) => {
           this.toastr.success(res.msg);
           this.getAllData();
@@ -224,7 +244,7 @@ export class HomeComponent implements OnInit {
       );
     } else {
       this.spinner.show();
-      this.apiService.addBooks(formData.value).subscribe(
+      this.apiService.addBooks(formData).subscribe(
         (res) => {
           this.toastr.success(res.msg);
           this.getAllData();
@@ -241,5 +261,6 @@ export class HomeComponent implements OnInit {
       );
     }
   }
+
 
 }
