@@ -30,6 +30,14 @@ const BorrowSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please provide the available copies'],
     },
+    image: {
+        type: String,
+        required: false,
+    },
+    pdfFile: {
+        type: String,
+        required: false,
+    },
     borrowed: {
         type: Boolean,
         required: [true, 'Please provide the borrowed status'],

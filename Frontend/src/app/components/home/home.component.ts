@@ -29,6 +29,8 @@ export class HomeComponent implements OnInit {
   totalItems = 0;
   currentItemsRange: string = '';
   isGenreDropdownOpen: boolean = false;
+  pdfFileError: string | null = null;
+
 
 
   constructor(
@@ -50,7 +52,8 @@ export class HomeComponent implements OnInit {
       publication_year: ['', [Validators.required]],
       genre: ['', Validators.required],
       total_copies: ['', [Validators.required]],
-      image: [null, Validators.required]
+      image: [null],
+      pdfFile: [null]
     });
     this.getAllData();
   }
@@ -166,6 +169,8 @@ export class HomeComponent implements OnInit {
       author: item.author,
       publication_year: item.publication_year,
       genre: item.genre,
+      image: item.image,
+      pdfFile: item.pdfFile,
       total_copies: item.total_copies
     };
 
@@ -208,6 +213,21 @@ export class HomeComponent implements OnInit {
     this.bookForm?.get('image')?.setValue(file);
   }
 
+  onPdfFileChange(event: any): void {
+    const files: FileList = event.target.files;
+    if (files.length > 0) {
+      const file = files[0];
+      if (file.type === 'application/pdf') {
+        this.bookForm?.get('pdfFile')?.setValue(file);
+        this.pdfFileError = null;
+      } else {
+        this.bookForm?.get('pdfFile')?.setValue(null);
+        this.pdfFileError = 'Please choose a PDF file.';
+      }
+    }
+  }
+
+
 
   saveBook(formValue: any) {
     this.spinner.show();
@@ -222,7 +242,10 @@ export class HomeComponent implements OnInit {
     if (imageControl instanceof FormControl && imageControl.value instanceof File) {
       formData.append('image', imageControl.value, imageControl.value.name);
     }
-
+    const pdfFileControl = this.bookForm?.get('pdfFile');
+    if (pdfFileControl instanceof FormControl && pdfFileControl.value instanceof File) {
+      formData.append('pdfFile', pdfFileControl.value, pdfFileControl.value.name);
+    }
     console.log(formData);
 
     if (this.book_id) {

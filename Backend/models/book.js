@@ -31,8 +31,12 @@ const BookSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        required: true
-    }
+        required: false,
+    },
+    pdfFile: {
+        type: String,
+        required: false,
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model('library_Books', BookSchema);

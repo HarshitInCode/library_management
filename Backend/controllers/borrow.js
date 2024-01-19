@@ -163,7 +163,6 @@ const getBorrowedList = async (req, res) => {
 const getAllBorrowList = async (req, res) => {
     const user = req.user;
     const requestedSearchTerm = req.query.search;
-    console.log(requestedSearchTerm);
 
     try {
         if (user && user.role === 'admin') {

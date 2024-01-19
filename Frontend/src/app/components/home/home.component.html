@@ -24,6 +24,7 @@
             <th><span>Publication Year</span></th>
             <!-- <th><span>Available Copies</span></th> -->
             <th><span>Total copies</span></th>
+            <th *ngIf="this.role === 'admin'"><span>Pdf</span></th>
             <th *ngIf="this.role === 'user'"><span>Status</span></th>
             <th *ngIf="this.role === 'admin'"><span>Action</span></th>
           </tr>
@@ -40,6 +41,10 @@
             <td>{{ item.publication_year }}</td>
             <!-- <td>{{ item.available_copies }}</td> -->
             <td>{{ item.total_copies }}</td>
+            <td *ngIf="this.role === 'admin'">
+              <a class="pdf-Size" [href]="'http://localhost:3000/Uploads/' + item.pdfFile" target="_blank"><i
+                  class="fa-solid fa-file-pdf"></i></a>
+            </td>
             <ng-container *ngIf="this.role === 'user'">
               <td *ngIf="item.borrowed; else borrowButton">
                 <button (click)="return(item.book_id)" class="button-13" role="button">
@@ -206,6 +211,7 @@
               Total Copies must be a number
             </div>
           </div>
+          <!-- Image Upload Section -->
           <div class="mb-3">
             <label for="images" class="form-label">Upload Images</label>
             <div class="input-group">
@@ -218,13 +224,32 @@
             <div *ngIf="
                             bookForm.get('image')?.hasError('required') &&
                             bookForm.get('image')?.touched
-                          " class="text-danger">
+              "
+              class="text-danger"
+            >
               Image is required
             </div>
             <div *ngIf="bookForm.get('image')?.value" class="mt-2">
               Selected Image: {{ bookForm.get("image")?.value.name }}
             </div>
           </div>
+          <!-- PDF File Upload Section -->
+          <div class="mb-3">
+            <label for="pdfFile" class="form-label">Upload PDF</label>
+            <input type="file" id="pdfFile" formControlName="pdfFile" (change)="onPdfFileChange($event)" accept=".pdf"
+              class="form-control" />
+            <div *ngIf="
+                          bookForm.get('pdfFile')?.hasError('required') &&
+                          bookForm.get('pdfFile')?.touched
+                        " class="text-danger">
+              PDF file is required
+            </div>
+            <div *ngIf="pdfFileError" class="text-danger">
+              {{ pdfFileError }}
+            </div>
+          </div>
+          
+          <!-- ... (remaining HTML code) -->
         </form>
       </div>
       <div class="modal-footer">

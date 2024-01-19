@@ -1,15 +1,15 @@
 <app-header></app-header>
 <div class="body-content flex flex-column">
   <main class="flex flex-column gap-3 grow">
-<section class="flex gap-2 items-center justify-between">
-  <h3 id="title" class="leading-none">Borrowed Books</h3>
-  <div *ngIf="this.role === 'admin'" class="search-container flex items-center">
-    <div class="search-wrapper">
-      <input type="search" [(ngModel)]="searchText" class="search-input" placeholder="Search..." (keyup)="search()">
-      <span class="search-icon" [class.hidden]="searchText !== ''"><i class="fa-solid fa-magnifying-glass"></i></span>
-    </div>
-  </div>
-</section>
+    <section class="flex gap-2 items-center justify-between">
+      <h3 id="title" class="leading-none">Borrowed Books</h3>
+      <div *ngIf="this.role === 'admin'" class="search-container flex items-center">
+        <div class="search-wrapper">
+          <input type="search" [(ngModel)]="searchText" class="search-input" placeholder="Search..." (keyup)="search()">
+          <span class="search-icon" [class.hidden]="searchText !== ''"><i class="fa-solid fa-magnifying-glass"></i></span>
+        </div>
+      </div>
+    </section>
 
 
     <section class="flex flex-column gap-2">
@@ -17,18 +17,25 @@
         <table>
           <tr class="no-hover">
             <th><span>ID</span></th>
+            <th><span>Image</span></th>
             <th><span>Book Name</span></th>
             <th><span>Author</span></th>
             <th><span>Genre</span></th>
             <th><span>Publication Year</span></th>
             <th><span>Borrowed date</span></th>
             <th><span>Return date</span></th>
+            <th *ngIf="this.role === 'user'"><span>Pdf</span></th>
             <th *ngIf="this.role === 'user'"><span>Status</span></th>
             <th *ngIf="this.role === 'admin'"><span>Borrowed by</span></th>
           </tr>
 
           <tr *ngFor="let item of tableData; let i = index">
             <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+            <td>
+              <img *ngIf="item.image" [src]="'http://localhost:3000/Uploads/' + item.image" alt="Book Image"
+                style="width: 50px; height: auto" />
+            </td>
+
             <td>{{ item.title }}</td>
             <td>{{ item.author }}</td>
             <td>{{ item.genre }}</td>
@@ -40,35 +47,38 @@
               </ng-container>
               <ng-template #dash>Pending</ng-template>
             </td>
+            <td *ngIf="this.role === 'user'"><a class="pdf-Size" [href]="'http://localhost:3000/Uploads/' + item.pdfFile"
+                target="_blank"><i class="fa-solid fa-file-pdf"></i></a>
+            </td>
             <td *ngIf="this.role === 'user'">
               <button (click)="return(item.book_id)" class="button-13" role="button">Return</button>
             </td>
             <td *ngIf="this.role === 'admin'">{{ item.borrowed_by.name }}</td>
           </tr>
-          </table>
+        </table>
       </div>
 
-<section class="flex items-center justify-between">
-  <small class="muted">{{ currentItemsRange }}</small>
+      <section class="flex items-center justify-between">
+        <small class="muted">{{ currentItemsRange }}</small>
 
-  <div class="flex gap-2 items-center">
-    <div class="flex gap-05 items-center">
-      <input class="input number small" readonly type="number" [value]="currentPage || 1" />
-      <small class="muted">/</small>
-      <small class="muted">{{ totalPages || 1 }} pages</small>
-      </div>
+        <div class="flex gap-2 items-center">
+          <div class="flex gap-05 items-center">
+            <input class="input number small" readonly type="number" [value]="currentPage || 1" />
+            <small class="muted">/</small>
+            <small class="muted">{{ totalPages || 1 }} pages</small>
+          </div>
 
-    <div class="flex gap-05 items-center">
-      <button class="button icon link" (click)="previousPage()">
-        <i class="fa-solid fa-angle-left"></i>
-      </button>
+          <div class="flex gap-05 items-center">
+            <button class="button icon link" (click)="previousPage()">
+              <i class="fa-solid fa-angle-left"></i>
+            </button>
 
-      <button class="button icon link" (click)="nextPage()">
-        <i class="fa-solid fa-chevron-right"></i>
-      </button>
-      </div>
-      </div>
+            <button class="button icon link" (click)="nextPage()">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            </div>
+            </div>
       </section>
-      </section>
+    </section>
   </main>
 </div>

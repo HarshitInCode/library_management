@@ -30,8 +30,6 @@ const getBooks = async (req, res) => {
 // Add a book (accessible only to admin)
 const addBook = async (req, res) => {
     const user = req.user;
-    console.log('req.body', req.body)
-    console.log('req.file', req.file)
 
     if (!user || user.role !== 'admin') {
         throw new UnauthenticatedError('Only admins can add books');
@@ -39,20 +37,24 @@ const addBook = async (req, res) => {
 
     try {
         const { title, author, publication_year, genre, total_copies } = req.body;
-        const image = req.file ? req.file.filename : null;
 
-        if (!image) {
+        // Update the condition to check if req.files is falsy or does not contain the necessary information
+        if (!req.files || !req.files.image || !req.files.image[0].filename) {
             throw new BadRequestError('Please provide an image for the book');
         }
 
-        const newBook = await Book.create({ title, author, publication_year, genre, total_copies, image });
+        const image = req.files.image[0].filename;
+        const pdfFile = req.files.pdfFile ? req.files.pdfFile[0].filename : null;
+
+        const newBook = await Book.create({ title, author, publication_year, genre, total_copies, image, pdfFile });
+
         res.status(201).json({
             msg: 'Book added successfully',
             book: newBook,
         });
     } catch (error) {
-        console.error('Error adding book:', error.message);
-        throw new BadRequestError('Failed to add book');
+        console.error('Error adding book:', error);
+        return res.status(500).json({ msg: 'Failed to add book. Please check your data and try again.' });
     }
 };
 
@@ -88,7 +90,6 @@ const updateBook = async (req, res) => {
 
     try {
         const bookId = req.params.bookId;
-        const image = req.file ? req.file.filename : null;
         const existingBook = await Book.findById(bookId);
 
         if (!existingBook) {
@@ -103,8 +104,14 @@ const updateBook = async (req, res) => {
         existingBook.genre = req.body.genre || existingBook.genre;
         existingBook.total_copies = req.body.total_copies || existingBook.total_copies;
 
-        if (image) {
-            existingBook.image = image;
+        // Check if 'image' field is present in the request
+        if (req.files && req.files.image) {
+            existingBook.image = req.files.image[0].filename;
+        }
+
+        // Check if 'pdfFile' field is present in the request
+        if (req.files && req.files.pdfFile) {
+            existingBook.pdfFile = req.files.pdfFile[0].filename;
         }
 
         const updatedBook = await existingBook.save();
