@@ -56,7 +56,6 @@ const addBook = async (req, res) => {
     }
 };
 
-
 // Get a specific book by ID (accessible to admin)
 const getBookById = async (req, res) => {
     try {
@@ -81,21 +80,34 @@ const getBookById = async (req, res) => {
 
 // Update a book by ID (accessible only to admin)
 const updateBook = async (req, res) => {
-
     const user = req.user;
+
     if (!user || user.role !== 'admin') {
         throw new UnauthenticatedError('Only admins can update books');
     }
 
     try {
+        const bookId = req.params.bookId;
+        const image = req.file ? req.file.filename : null;
+        const existingBook = await Book.findById(bookId);
 
-        const updatedBook = await Book.findByIdAndUpdate(req.params.bookId, { ...req.body }, { new: true });
-
-        if (!updatedBook) {
+        if (!existingBook) {
             return res.status(404).json({
                 msg: 'Book not found',
             });
         }
+
+        existingBook.title = req.body.title || existingBook.title;
+        existingBook.author = req.body.author || existingBook.author;
+        existingBook.publication_year = req.body.publication_year || existingBook.publication_year;
+        existingBook.genre = req.body.genre || existingBook.genre;
+        existingBook.total_copies = req.body.total_copies || existingBook.total_copies;
+
+        if (image) {
+            existingBook.image = image;
+        }
+
+        const updatedBook = await existingBook.save();
 
         res.status(200).json({
             msg: 'Book updated successfully',

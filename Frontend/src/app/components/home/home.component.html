@@ -17,6 +17,7 @@
         <table>
           <tr class="no-hover">
             <th><span>ID</span></th>
+            <th><span>Image</span></th>
             <th><span>Book Name</span></th>
             <th><span>Author</span></th>
             <th><span>Genre</span></th>
@@ -29,6 +30,10 @@
 
           <tr *ngFor="let item of modifiedTableData; let i = index">
             <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+            <td>
+              <img *ngIf="item.image" [src]="'http://localhost:3000/Uploads/' + item.image" alt="Book Image"
+                style="width: 50px; height: auto" />
+            </td>
             <td>{{ item.title }}</td>
             <td>{{ item.author }}</td>
             <td>{{ item.genre }}</td>
@@ -41,13 +46,13 @@
                   Return
                 </button>
               </td>
-              </ng-container>
-              <ng-template #borrowButton>
-                <td *ngIf="this.role === 'user'">
-                  <button (click)="borrow(item)" class="button-13" role="button">
-                    Borrow
-                  </button>
-                </td>
+            </ng-container>
+            <ng-template #borrowButton>
+              <td *ngIf="this.role === 'user'">
+                <button (click)="borrow(item)" class="button-13" role="button">
+                  Borrow
+                </button>
+              </td>
             </ng-template>
 
             <td *ngIf="this.role === 'admin'">
@@ -60,7 +65,7 @@
               </a>
             </td>
           </tr>
-          </table>
+        </table>
       </div>
 
       <section class="flex items-center justify-between">
@@ -105,9 +110,11 @@
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" formControlName="title" />
             <div *ngIf="
-                                                    bookForm.get('title')?.hasError('required') &&
-                                                    bookForm.get('title')?.touched
-                                                  " class="text-danger">
+                            bookForm.get('title')?.hasError('required') &&
+                            bookForm.get('title')?.touched
+              "
+              class="text-danger"
+            >
               Title is required
             </div>
           </div>
@@ -117,9 +124,11 @@
             <label for="author" class="form-label">Author</label>
             <input type="text" class="form-control" id="author" formControlName="author" />
             <div *ngIf="
-                                                    bookForm.get('author')?.hasError('required') &&
-                                                    bookForm.get('author')?.touched
-                                                  " class="text-danger">
+                            bookForm.get('author')?.hasError('required') &&
+                            bookForm.get('author')?.touched
+              "
+              class="text-danger"
+            >
               Author is required
             </div>
           </div>
@@ -129,15 +138,19 @@
             <label for="publication_year" class="form-label">Publication Year</label>
             <input type="number" class="form-control" id="publication_year" formControlName="publication_year" />
             <div *ngIf="
-                                                    bookForm.get('publication_year')?.hasError('required') &&
-                                                    bookForm.get('publication_year')?.touched
-                                                  " class="text-danger">
+                            bookForm.get('publication_year')?.hasError('required') &&
+                            bookForm.get('publication_year')?.touched
+              "
+              class="text-danger"
+            >
               Publication Year is required
             </div>
             <div *ngIf="
-                                                    bookForm.get('publication_year')?.hasError('pattern') &&
-                                                    bookForm.get('publication_year')?.touched
-                                                  " class="text-danger">
+                            bookForm.get('publication_year')?.hasError('pattern') &&
+                            bookForm.get('publication_year')?.touched
+              "
+              class="text-danger"
+            >
               Publication Year must be a number
             </div>
           </div>
@@ -146,10 +159,11 @@
           <div class="mb-3" (click)="isGenreDropdownOpen = !isGenreDropdownOpen">
             <label for="genre" class="form-label">Genre</label>
             <select class="form-select" id="genre" formControlName="genre" [class.show-genre-error]="
-                                                    isGenreDropdownOpen &&
-                                                    bookForm.get('genre')?.hasError('required') &&
-                                                    bookForm.get('genre')?.touched
-                                                  ">
+                            isGenreDropdownOpen &&
+                            bookForm.get('genre')?.hasError('required') &&
+                            bookForm.get('genre')?.touched
+              "
+            >
               <option [disabled]="isGenreDropdownOpen">Select Genre</option>
               <option value="Fiction">Fiction</option>
               <option value="Non-Fiction">Non-Fiction</option>
@@ -161,10 +175,12 @@
               <option value="Other">Other</option>
             </select>
             <div *ngIf="
-                                                    isGenreDropdownOpen &&
-                                                    bookForm.get('genre')?.hasError('required') &&
-                                                    bookForm.get('genre')?.touched
-                                                  " class="text-danger">
+                            isGenreDropdownOpen &&
+                            bookForm.get('genre')?.hasError('required') &&
+                            bookForm.get('genre')?.touched
+              "
+              class="text-danger"
+            >
               Genre is required
             </div>
           </div>
@@ -174,21 +190,40 @@
             <label for="total_copies" class="form-label">Total Copies</label>
             <input type="number" class="form-control" id="total_copies" formControlName="total_copies" />
             <div *ngIf="
-                                                    bookForm.get('total_copies')?.hasError('required') &&
-                                                    bookForm.get('total_copies')?.touched
-                                                  " class="text-danger">
+                            bookForm.get('total_copies')?.hasError('required') &&
+                            bookForm.get('total_copies')?.touched
+              "
+              class="text-danger"
+            >
               Total Copies is required
             </div>
             <div *ngIf="
-                                                    bookForm.get('total_copies')?.hasError('pattern') &&
-                                                    bookForm.get('total_copies')?.touched
-                                                  " class="text-danger">
+                            bookForm.get('total_copies')?.hasError('pattern') &&
+                            bookForm.get('total_copies')?.touched
+              "
+              class="text-danger"
+            >
               Total Copies must be a number
             </div>
           </div>
-          <div>
+          <div class="mb-3">
             <label for="images" class="form-label">Upload Images</label>
-            <input type="file" id="images" (change)="onFileChange($event)" formControlName="image">
+            <div class="input-group">
+              <input type="file" id="images" formControlName="image" (change)="onFileChange($event)"
+                class="form-control visually-hidden" />
+              <label class="input-group-text" for="images">
+                <i class="fa-solid fa-upload"></i> Choose File
+              </label>
+            </div>
+            <div *ngIf="
+                            bookForm.get('image')?.hasError('required') &&
+                            bookForm.get('image')?.touched
+                          " class="text-danger">
+              Image is required
+            </div>
+            <div *ngIf="bookForm.get('image')?.value" class="mt-2">
+              Selected Image: {{ bookForm.get("image")?.value.name }}
+            </div>
           </div>
         </form>
       </div>

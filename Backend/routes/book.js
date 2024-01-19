@@ -15,7 +15,7 @@ router.get('/', getBooks);
 router.get('/:bookId', getBookById);
 
 // Update a book by ID
-router.put('/:bookId', updateBook);
+router.put('/:bookId', upload.single('image'), updateBook);
 
 // Delete a book by ID
 router.delete('/:bookId', deleteBook);

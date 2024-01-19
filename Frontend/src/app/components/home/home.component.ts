@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
@@ -205,9 +205,7 @@ export class HomeComponent implements OnInit {
 
   onFileChange(event: any) {
     const file = event.target.files[0];
-    console.log(file);
-
-    this.bookForm?.get('image')?.setValue(file.name);
+    this.bookForm?.get('image')?.setValue(file);
   }
 
 
@@ -220,9 +218,11 @@ export class HomeComponent implements OnInit {
     formData.append('publication_year', formValue.value.publication_year);
     formData.append('genre', formValue.value.genre);
     formData.append('total_copies', formValue.value.total_copies);
-    if (formValue.image instanceof File) {
-      formData.append('image', formValue.image);
+    const imageControl = this.bookForm?.get('image');
+    if (imageControl instanceof FormControl && imageControl.value instanceof File) {
+      formData.append('image', imageControl.value, imageControl.value.name);
     }
+
     console.log(formData);
 
     if (this.book_id) {
