@@ -141,4 +141,26 @@ export class BorrowedBooksComponent implements OnInit {
     this.spinner.show();
     this.searchSubject.next(this.searchText);
   }
+
+  sendReminderEmail(borrow: any) {
+    this.spinner.show();
+    const userEmail = 'harshitsingh8456@gmail.com';
+
+    const data = {
+      borrowId: borrow._id,
+      userEmail: userEmail,
+    };
+    this.apiService.sendReminderEmail(data).subscribe(
+      (response) => {
+        this.toastr.success(response.msg);
+        this.spinner.hide();
+      },
+      (error) => {
+        const errorMessage = error.error && error.error.msg ? error.error.msg : 'An error occurred';
+        this.toastr.error(errorMessage);
+        this.spinner.hide();
+      }
+    );
+  }
+
 }

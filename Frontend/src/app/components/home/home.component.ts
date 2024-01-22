@@ -14,6 +14,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
+  enlargedImage: string | null = null;
   bookForm: FormGroup | undefined;
   role: any;
   showReturnButton: boolean = false;

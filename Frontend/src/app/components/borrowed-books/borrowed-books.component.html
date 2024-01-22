@@ -5,12 +5,11 @@
       <h3 id="title" class="leading-none">Borrowed Books</h3>
       <div *ngIf="this.role === 'admin'" class="search-container flex items-center">
         <div class="search-wrapper">
-          <input type="search" [(ngModel)]="searchText" class="search-input" placeholder="Search..." (keyup)="search()">
+          <input type="search" [(ngModel)]="searchText" class="search-input" placeholder="Search..." (keyup)="search()" />
           <span class="search-icon" [class.hidden]="searchText !== ''"><i class="fa-solid fa-magnifying-glass"></i></span>
         </div>
       </div>
     </section>
-
 
     <section class="flex flex-column gap-2">
       <div class="table-container">
@@ -27,6 +26,7 @@
             <th *ngIf="this.role === 'user'"><span>Pdf</span></th>
             <th *ngIf="this.role === 'user'"><span>Status</span></th>
             <th *ngIf="this.role === 'admin'"><span>Borrowed by</span></th>
+            <!-- <th *ngIf="this.role === 'admin'"><span>Mail</span></th> -->
           </tr>
 
           <tr *ngFor="let item of tableData; let i = index">
@@ -36,24 +36,37 @@
                 style="width: 50px; height: auto" />
             </td>
 
-            <td>{{ item.title }}</td>
+            <td class="truncate-text" title="{{ item.title }}">
+              {{ item.title }}
+            </td>
+
             <td>{{ item.author }}</td>
             <td>{{ item.genre }}</td>
             <td>{{ item.publication_year }}</td>
-            <td>{{ item.borrowed_date | date:'medium' }}</td>
+            <td>{{ item.borrowed_date | date : "medium" }}</td>
             <td>
               <ng-container *ngIf="item.return_date; else dash">
-                {{ item.return_date | date:'medium' }}
+                {{ item.return_date | date : "medium" }}
               </ng-container>
               <ng-template #dash>Pending</ng-template>
             </td>
-            <td *ngIf="this.role === 'user'"><a class="pdf-Size" [href]="'http://localhost:3000/Uploads/' + item.pdfFile"
-                target="_blank"><i class="fa-solid fa-file-pdf"></i></a>
+            <td *ngIf="this.role === 'user'">
+              <a class="pdf-Size" [href]="'http://localhost:3000/Uploads/' + item.pdfFile" target="_blank"><i
+                  class="fa-solid fa-file-pdf"></i></a>
             </td>
             <td *ngIf="this.role === 'user'">
-              <button (click)="return(item.book_id)" class="button-13" role="button">Return</button>
+              <button (click)="return(item.book_id)" class="button-13" role="button">
+                Return
+              </button>
             </td>
             <td *ngIf="this.role === 'admin'">{{ item.borrowed_by.name }}</td>
+            <!-- <td *ngIf="item.borrowed">
+                          <button (click)="sendReminderEmail(item)" class="button-13" role="button">
+                            Send Mail
+                          </button>
+                        </td>
+                        <td class="blank_val" *ngIf="!item.borrowed">-</td> -->
+
           </tr>
         </table>
       </div>
@@ -76,8 +89,8 @@
             <button class="button icon link" (click)="nextPage()">
               <i class="fa-solid fa-chevron-right"></i>
             </button>
-            </div>
-            </div>
+          </div>
+          </div>
       </section>
     </section>
   </main>

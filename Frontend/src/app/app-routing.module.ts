@@ -5,7 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { BorrowedBooksComponent } from './components/borrowed-books/borrowed-books.component';
 import { UsersComponent } from './components/users/users.component';
-import { AuthGuard } from './guards/auth.guard'; // Import your AuthGuard
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {

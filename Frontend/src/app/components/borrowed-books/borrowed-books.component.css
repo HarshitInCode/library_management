@@ -337,3 +337,20 @@ a {
 .pdf-Size {
   font-size: 1.5rem;
 }
+.truncate-text {
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.truncate-text:hover {
+  white-space: normal;
+  max-width: none;
+  overflow: visible;
+}
+
+.blank_val {
+  text-align: center;
+}

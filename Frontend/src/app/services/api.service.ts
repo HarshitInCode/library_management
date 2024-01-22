@@ -86,4 +86,9 @@ export class ApiService {
     const url = `${this.apiUrl}/books`;
     return this.http.post(url, data);
   }
+
+  sendReminderEmail(data: any): Observable<any> {
+    const url = `${this.apiUrl}/borrow/send-reminder-email`;
+    return this.http.post(url, data);
+  }
 }

@@ -1,6 +1,8 @@
+require('dotenv').config();
 const Book = require('../models/book');
 const { UnauthenticatedError } = require('../errors');
 const Borrow = require('../models/borrow');
+const nodemailer = require('nodemailer');
 
 const borrowBook = async (req, res) => {
     const user = req.user;
@@ -206,9 +208,6 @@ const getAllBorrowList = async (req, res) => {
     }
 };
 
-
-
-
 const getBookDetails = async (req, res) => {
     const userId = req.user.userId;
     const bookId = req.params.bookId;
@@ -238,6 +237,78 @@ const getBookDetails = async (req, res) => {
     }
 };
 
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.MAIL_EMAIL,
+        pass: process.env.MAIL_SECRET,
+    },
+});
+
+const sendReminderEmail = async (req, res) => {
+    const borrowId = req.body.borrowId;
+    const userEmail = req.body.userEmail;
+
+    try {
+        // Find the borrow entry using borrow_id
+        const borrowEntry = await Borrow.findById(borrowId);
+
+        if (!borrowEntry) {
+            return res.status(404).json({
+                msg: 'Borrow entry not found for the provided borrow_id',
+            });
+        }
+
+        const bookTitle = borrowEntry.title;
+        const author = borrowEntry.author;
+        const genre = borrowEntry.genre;
+        const publicationYear = borrowEntry.publication_year;
+        const borrowedDate = borrowEntry.borrowed_date.toDateString();
+        const readerName = borrowEntry.borrowed_by.name;
+
+        const mailOptions = {
+            from: process.env.MAIL_EMAIL,
+            to: userEmail,
+            subject: 'Reminder: Return Overdue Book',
+            html: `
+                <!doctype html>
+                <html lang="en-US">
+                <head>
+                    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+                    <title>Book Return Reminder</title>
+                    <!-- Add any additional styles or meta tags here -->
+                </head>
+                <body>
+                    <p>Dear ${readerName},</p>
+                    <p>This is a friendly reminder to return the overdue book:</p>
+                    <ul>
+                        <li><strong>Title:</strong> ${bookTitle}</li>
+                        <li><strong>Author:</strong> ${author}</li>
+                        <li><strong>Genre:</strong> ${genre}</li>
+                        <li><strong>Publication Year:</strong> ${publicationYear}</li>
+                        <li><strong>Borrowed Date:</strong> ${borrowedDate}</li>
+                    </ul>
+                    <p>Please return the book at your earliest convenience. Thank you!</p>
+                    <p>Sincerely,<br/>Your Library</p>
+                </body>
+                </html>
+            `,
+        };
+
+        await transporter.sendMail(mailOptions);
+
+        res.status(200).json({
+            msg: 'Reminder email sent successfully',
+        });
+    } catch (error) {
+        console.error('Error sending reminder email:', error.message);
+        res.status(500).json({
+            msg: 'Internal server error',
+        });
+    }
+};
 
 
-module.exports = { borrowBook, returnBook, getBorrowedList, getAllBorrowList, getBookDetails };
+
+
+module.exports = { borrowBook, returnBook, getBorrowedList, getAllBorrowList, getBookDetails, sendReminderEmail };

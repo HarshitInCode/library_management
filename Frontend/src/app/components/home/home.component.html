@@ -35,7 +35,7 @@
               <img *ngIf="item.image" [src]="'http://localhost:3000/Uploads/' + item.image" alt="Book Image"
                 style="width: 50px; height: auto" />
             </td>
-            <td>{{ item.title }}</td>
+            <td class="truncate-text" title="{{ item.title }}">{{ item.title }}</td>
             <td>{{ item.author }}</td>
             <td>{{ item.genre }}</td>
             <td>{{ item.publication_year }}</td>
@@ -248,7 +248,7 @@
               {{ pdfFileError }}
             </div>
           </div>
-          
+
           <!-- ... (remaining HTML code) -->
         </form>
       </div>
