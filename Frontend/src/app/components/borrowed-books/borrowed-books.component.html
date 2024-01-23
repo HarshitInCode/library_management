@@ -26,7 +26,7 @@
             <th *ngIf="this.role === 'user'"><span>Pdf</span></th>
             <th *ngIf="this.role === 'user'"><span>Status</span></th>
             <th *ngIf="this.role === 'admin'"><span>Borrowed by</span></th>
-            <!-- <th *ngIf="this.role === 'admin'"><span>Mail</span></th> -->
+            <th *ngIf="this.role === 'admin'"><span>Mail</span></th>
           </tr>
 
           <tr *ngFor="let item of tableData; let i = index">
@@ -60,12 +60,12 @@
               </button>
             </td>
             <td *ngIf="this.role === 'admin'">{{ item.borrowed_by.name }}</td>
-            <!-- <td *ngIf="item.borrowed">
+            <td *ngIf="item.borrowed">
                           <button (click)="sendReminderEmail(item)" class="button-13" role="button">
                             Send Mail
                           </button>
                         </td>
-                        <td class="blank_val" *ngIf="!item.borrowed">-</td> -->
+                        <td class="blank_val" *ngIf="!item.borrowed">-</td>
 
           </tr>
         </table>

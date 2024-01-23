@@ -144,11 +144,10 @@ export class BorrowedBooksComponent implements OnInit {
 
   sendReminderEmail(borrow: any) {
     this.spinner.show();
-    const userEmail = 'harshitsingh8456@gmail.com';
 
     const data = {
       borrowId: borrow._id,
-      userEmail: userEmail,
+      userId: borrow.borrowed_by.user_id,
     };
     this.apiService.sendReminderEmail(data).subscribe(
       (response) => {

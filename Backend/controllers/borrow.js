@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Book = require('../models/book');
+const Auth = require('../models/auth')
 const { UnauthenticatedError } = require('../errors');
 const Borrow = require('../models/borrow');
 const nodemailer = require('nodemailer');
@@ -247,17 +248,25 @@ const transporter = nodemailer.createTransport({
 
 const sendReminderEmail = async (req, res) => {
     const borrowId = req.body.borrowId;
-    const userEmail = req.body.userEmail;
+    const userId = req.body.userId;
 
     try {
         // Find the borrow entry using borrow_id
         const borrowEntry = await Borrow.findById(borrowId);
+        const userEntry = await Auth.findById(userId);
 
         if (!borrowEntry) {
             return res.status(404).json({
                 msg: 'Borrow entry not found for the provided borrow_id',
             });
         }
+
+        if (!userEntry) {
+            return res.status(404).json({
+                msg: 'User Not Found'
+            })
+        }
+        console.log(userEntry.email);
 
         const bookTitle = borrowEntry.title;
         const author = borrowEntry.author;
@@ -268,7 +277,7 @@ const sendReminderEmail = async (req, res) => {
 
         const mailOptions = {
             from: process.env.MAIL_EMAIL,
-            to: userEmail,
+            to: userEntry.email,
             subject: 'Reminder: Return Overdue Book',
             html: `
                 <!doctype html>
