@@ -280,27 +280,68 @@ const sendReminderEmail = async (req, res) => {
             to: userEntry.email,
             subject: 'Reminder: Return Overdue Book',
             html: `
-                <!doctype html>
-                <html lang="en-US">
-                <head>
-                    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-                    <title>Book Return Reminder</title>
-                    <!-- Add any additional styles or meta tags here -->
-                </head>
-                <body>
-                    <p>Dear ${readerName},</p>
-                    <p>This is a friendly reminder to return the overdue book:</p>
-                    <ul>
-                        <li><strong>Title:</strong> ${bookTitle}</li>
-                        <li><strong>Author:</strong> ${author}</li>
-                        <li><strong>Genre:</strong> ${genre}</li>
-                        <li><strong>Publication Year:</strong> ${publicationYear}</li>
-                        <li><strong>Borrowed Date:</strong> ${borrowedDate}</li>
-                    </ul>
-                    <p>Please return the book at your earliest convenience. Thank you!</p>
-                    <p>Sincerely,<br/>Your Library</p>
-                </body>
-                </html>
+                <!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Book Return Reminder</title>
+    <!-- Add any additional styles or meta tags here -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4285f4;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Book Return Reminder</h1>
+        <p>Dear ${readerName},</p>
+        <p>We hope this message finds you well. It's time to return the book you borrowed from our library.</p>
+        <ul>
+            <li><strong>Title:</strong> ${bookTitle}</li>
+            <li><strong>Author:</strong> ${author}</li>
+            <li><strong>Genre:</strong> ${genre}</li>
+            <li><strong>Publication Year:</strong> ${publicationYear}</li>
+            <li><strong>Borrowed Date:</strong> ${borrowedDate}</li>
+        </ul>
+        <p>
+            Our library values your timely return, and we appreciate your cooperation. Please return the book at your earliest convenience.
+            If you have any questions or concerns, feel free to contact us.
+        </p>
+        <p>Thank you for being a valued member of our library!</p>
+        <p>Sincerely,<br/>Your Library</p>
+    </div>
+</body>
+</html>
+
             `,
         };
 
