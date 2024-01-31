@@ -60,12 +60,12 @@
               </button>
             </td>
             <td *ngIf="this.role === 'admin'">{{ item.borrowed_by.name }}</td>
-            <td *ngIf="item.borrowed">
+            <td *ngIf="item.borrowed && this.role === 'admin'">
                           <button (click)="sendReminderEmail(item)" class="button-13" role="button">
                             Send Mail
                           </button>
                         </td>
-                        <td class="blank_val" *ngIf="!item.borrowed">-</td>
+                        <td class="blank_val" *ngIf="!item.borrowed">Returned</td>
 
           </tr>
         </table>
