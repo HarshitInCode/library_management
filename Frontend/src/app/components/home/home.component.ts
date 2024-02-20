@@ -76,7 +76,8 @@ export class HomeComponent implements OnInit {
           borrowedBooks.borrowList.forEach((borrowedBook: any) => {
             const index = updatedTableData.findIndex((book) => book._id === borrowedBook.book_id);
             if (index !== -1) {
-              updatedTableData[index] = borrowedBook;
+              updatedTableData[index].borrowed = borrowedBook.borrowed;
+              updatedTableData[index].book_id = borrowedBook.book_id;
             }
           });
           this.modifiedTableData = updatedTableData;

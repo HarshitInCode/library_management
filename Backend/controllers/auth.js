@@ -43,7 +43,6 @@ const login = async (req, res, next) => {
         name: user.fName
     };
 
-    // Compared password
     const token = user.createJWT();
     res.status(201).json({
         msg: 'Login successful',

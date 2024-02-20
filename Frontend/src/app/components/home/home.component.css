@@ -326,7 +326,7 @@ td {
   font-size: 1.5rem;
 }
 .truncate-text {
-  max-width: 150px;
+  max-width: 100px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

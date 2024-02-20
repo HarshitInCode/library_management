@@ -5,7 +5,7 @@
       <h3 id="title" class="leading-none">Borrowed Books</h3>
       <div *ngIf="this.role === 'admin'" class="search-container flex items-center">
         <div class="search-wrapper">
-          <input type="search" [(ngModel)]="searchText" class="search-input" placeholder="Search..." (keyup)="search()" />
+          <input type="search" [(ngModel)]="searchText" class="search-input" placeholder="Search..." (input)="search()" />
           <span class="search-icon" [class.hidden]="searchText !== ''"><i class="fa-solid fa-magnifying-glass"></i></span>
         </div>
       </div>

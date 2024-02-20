@@ -37,6 +37,11 @@ const BookSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    book_id: {
+        type: String,
+        required: false,
+        default: '',
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('library_Books', BookSchema);

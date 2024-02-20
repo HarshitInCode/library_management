@@ -451,9 +451,7 @@ select::after {
 .input-field select {
   width: 100%;
   padding: 10px;
-  /* Adjust padding as needed */
   box-sizing: border-box;
-  /* Include padding in the element's total width */
 }
 
 .validation {
@@ -465,7 +463,6 @@ select::after {
   margin-bottom: -1.6rem;
 }
 
-/* Add media queries for responsiveness if needed */
 @media (max-width: 768px) {
   .input-field {
     margin-bottom: 15px;

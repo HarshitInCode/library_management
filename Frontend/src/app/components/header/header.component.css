@@ -131,7 +131,7 @@ img {
     padding-block: 4.5rem 4rem;
     transition: top 0.5s ease-in-out;
     }
-    
+
     .nav__menu.open {
       top: 0;
   }
